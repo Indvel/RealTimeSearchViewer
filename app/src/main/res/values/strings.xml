@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">실시간 검색어</string>
+    <string name="naver">네이버</string>
+    <string name="daum">다음</string>
+</resources>

@@ -187,22 +187,22 @@ public class MainActivity extends AppCompatActivity {
                     naverAdapter.addItem(nUrl, rank, title, updown, false);
                 }
 
-                Document daum = Jsoup.connect("http://m.daum.net")
+                Document daum = Jsoup.connect("https://m.search.daum.net/search?w=tot&nil_mtopsearch=btn&DA=YZR&q=.")
                         .timeout(5000)
                         .header("Accept-Encoding", "gzip, deflate, br")
-                        .header("Accept-Language", "ko-KR,ko;q=0.8,en-US;q=0.6,en;q=0.4,tr;q=0.2")
+                        .header("Accept-Language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7,tr;q=0.6")
                         .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36")
                         .get();
 
-                Elements sel2 = daum.select("div.keyword_issue > ol[class=list_issue #hotissue list_realtime] > li");
-
+                Elements sel2 = daum.select("div#issue_live_div > div#keySlide > div.wrap_issue").get(0).select("ol.list_issue > li");
+                
                 for(Element e : sel2) {
 
                     String dUrl = e.select("a.link_issue").attr("href");
                     String rankD = e.select("a.link_issue > em.num_issue").text()+".";
                     String titleD = e.select("a.link_issue > span.txt_issue").text();
                     String updownD = e.select("em.state_issue > span.num_rank").text();
-                    String up = e.select("em.state_issue > span.ico_mtop.ico_up").text();
+                    String up = e.select("em.state_issue > span.ico_ksg.ico_up").text();
                     if(updownD == "") {
                         updownD = "NEW";
                     }
@@ -216,17 +216,6 @@ public class MainActivity extends AppCompatActivity {
 
                     daumAdapter.addItem(dUrl, rankD, titleD, updownD, isup);
                 }
-
-                Document nate = Jsoup.connect("https://m.search.daum.net/nate?q=dd&w=tot&thr=mnms&input_search=dd")
-                        .timeout(3000)
-                        .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8")
-                        .header("Accept-Encoding", "gzip, deflate, br")
-                        .header("Accept-Language", "ko-KR,ko;q=0.8,en-US;q=0.6,en;q=0.4,tr;q=0.2")
-                        .referrer("http://m.nate.com/")
-                        .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36")
-                        .get();
-
-                System.out.println(nate);
 
 
             } catch (IOException e) {
